@@ -5,10 +5,9 @@ from .mdot import MDot
 
 To-Do's:
 
-	Disc:
-		- aim function (arrow towards target)
-		- throw_to function
-		- undo function
+	- aim function (arrow towards target)
+	- throw_to function
+	- undo function
 
 '''
 
