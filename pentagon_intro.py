@@ -217,22 +217,33 @@ class PentagonClassTest(MScene):
 		self.create_field(method=FadeIn)
 
 		# clear the text
-		self.clear_last_text()
+		self.clear_last_text(FadeOut)
 
 		# set up the offence
 		self.offence = Pentagon()
 
-		### <UGLY>
-
+		### TODO
 		# show the offence
 		self.play(self.offence.shape_method(Create))
 
+		### TODO
 		# fade out the offence and hide the shape
 		self.play(
 					self.offence.FadeOutShape(),
 					*self.offence.Create(),
 				 )
 
-		### </UGLY>
+		### TODO
+		# try making a cut
+		# self.play(self.offence.deep().animate.move_to(self.offence.center))
+		# self.play(self.offence.deep().cut_to(self.offence.center))
+		self.new_cut(self.offence.deep(),self.offence.center)
 
+		# undo the cut
+		self.offence.deep().undo()
+
+		# move the offence
 		
+
+		# wait (and process any queued actions)
+		self.wait()
