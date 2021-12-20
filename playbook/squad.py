@@ -7,7 +7,7 @@ from .player import Player
 
 To-Do's:
 
-	- center method
+	- shift entire squad?
 
 '''
 
@@ -47,10 +47,15 @@ class Squad():
 	def players(self):
 		return self._players
 
-	@property
-	def center(self):
-		# TODO place at centre
-		return Dot()
+	def get_player(self,index,new,object):
+		print(self.objects)
+		print(self.players)
+		if new:
+			return self.make_player(object=object).move_to(self.shape.get_vertices()[index])
+		if object:
+			return self.objects[index]
+		else:
+			return self.players[index]
 
 	def method(self,method):
 		return tuple([method(o) for o in self.objects])
