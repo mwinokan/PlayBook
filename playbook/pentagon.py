@@ -7,8 +7,7 @@ from manim import *
 
 To-Do's
 
-	- correct center
-	- shift functionality
+	- update polygon to current positions
 
 '''
 
@@ -35,37 +34,23 @@ class Pentagon(Squad):
 
 		vertices = polygon.get_vertices()
 
-		# self._players = []
-		# for vertex in vertices:
-		# 	self._players.append(Player(fill=self._fill,stroke=self._stroke,opacity=self._opacity,strokeWidth=self._strokeWidth))
-
 		for point,player in zip(vertices,self.players):
 			player.object.move_to(point)
 
-	def handler1(self,new=False):
-		if new:
-			return self.make_player(object=True).move_to(self._pentagon.get_vertices()[1])
-		return self.objects[1]
+	def handler1(self,new=False,object=False):
+		return self.get_player(1,new=new,object=object)
 
-	def handler2(self,new=False):
-		if new:
-			return self.make_player(object=True).move_to(self._pentagon.get_vertices()[2])
-		return self.objects[2]
+	def handler2(self,new=False,object=False):
+		return self.get_player(2,new=new,object=object)
 
-	def wing1(self,new=False):
-		if new:
-			return self.make_player(object=True).move_to(self._pentagon.get_vertices()[0])
-		return self.objects[0]
+	def wing1(self,new=False,object=False):
+		return self.get_player(0,new=new,object=object)
 
-	def wing2(self,new=False):
-		if new:
-			return self.make_player(object=True).move_to(self._pentagon.get_vertices()[3])
-		return self.objects[3]
+	def wing2(self,new=False,object=False):
+		return self.get_player(3,new=new,object=object)
 
-	def deep(self,new=False):
-		if new:
-			return self.make_player(object=True).move_to(self._pentagon.get_vertices()[4])
-		return self.objects[4]
+	def deep(self,new=False,object=False):
+		return self.get_player(4,new=new,object=object)
 
 	def shape_method(self,method):
 		return method(self._polygon)
@@ -78,6 +63,21 @@ class Pentagon(Squad):
 
 	def FadeOutShape(self):
 		return self.shape_method(FadeOut)
+
+	def shift(self,direction):
+		self.shape.shift(direction)
+		for p in self.objects:
+			p.shift(direction)
+
+	@property
+	def center(self):
+		vertices = self.shape.get_vertices()
+		x = sum(v[0] for v in vertices)/len(vertices)
+		y = sum(v[1] for v in vertices)/len(vertices)
+		return [x,y,0]
+		# d = Dot()
+		# d.move_to([x,y,0])
+		# return d
 
 	@property
 	def shape(self):
