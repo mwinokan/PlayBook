@@ -6,11 +6,12 @@ from .mdot import MDot
 To-Do's:
 
 	Player: 
-		- cutting function
+		- undo function animations
 		- trail for cutting
-		- undo function
 
 '''
+
+from copy import deepcopy
 
 class Player(MDot):
 
@@ -18,8 +19,10 @@ class Player(MDot):
 		super(Player,self).__init__(**kwargs)
 		pass
 
-	def cut_to(self,scene,point):
-		if len(point) == 2:
-			point = point + [0]
-		return self.object.move_to(point).copy()
-		# scene.play(ReplacementTransform(self.object,self.object.move_to(point)),run_time=3)
+	def undo(self):
+		self.object.move_to(self._previous_position)
+
+	def cut_to(self,target,trail=False):
+		# trail: https://docs.manim.community/en/stable/reference/manim.animation.movement.MoveAlongPath.html
+		self._previous_position = self.object.get_arc_center()
+		return self.object.animate.move_to(target)
