@@ -65,12 +65,29 @@ class MScene(Scene):
 	def remove_field(self,method=None):
 		self.remove(*self.field.objects)
 
-	def clear_last_text(self):
+	def clear_last_text(self,method=None):
+		if method is not None:
+			if isinstance(self._last_text,list):
+				queue=[]
+				for t in self._last_text:
+					queue.append(method(t))
+				self.play(*tuple(queue))
+			else:
+				self.play(method(self._last_text))
+
 		if isinstance(self._last_text,list):
 			for t in self._last_text:
 				self.remove(t)
 		else:
 			self.remove(self._last_text)
+
+	def new_cut(self,player,target,trail=False):
+		self._last_cutter = player
+		self.play(player.cut_to(target,trail=trail))
+
+	def undo_last_cut(self):
+		self._last_cutter.undo()
+		self._last_cutter = None
 
 	@property
 	def field(self):
