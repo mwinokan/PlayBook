@@ -1,6 +1,14 @@
 
 from manim import *
 
+'''
+
+To-Do:
+
+	- inherit from Dot?
+
+'''
+
 class MDot():
 
 	def __init__(self,fill=WHITE,stroke=WHITE,opacity=1.0,strokeWidth=1):
@@ -21,3 +29,7 @@ class MDot():
 	def object(self):
 		# print(type(self))
 		return self._object
+
+	@property
+	def position(self):
+		return self.object.get_arc_center()
